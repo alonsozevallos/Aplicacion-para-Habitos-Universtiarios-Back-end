@@ -1,0 +1,76 @@
+### Variables
+@baseUrl = http://localhost:3001
+@studentEmail = estudiante@universidad.edu
+@habitId = 1
+
+### 1) Root
+GET {{baseUrl}}/
+Accept: application/json
+
+###
+
+### 2) Health
+GET {{baseUrl}}/health
+Accept: application/json
+
+###
+
+### 3) API root
+GET {{baseUrl}}/api
+Accept: application/json
+
+###
+
+### 4) Listar habitos (GET collection)
+GET {{baseUrl}}/api/students/{{studentEmail}}/habitos
+Accept: application/json
+
+###
+
+### 5) Obtener un habito por ID (GET resource)
+GET {{baseUrl}}/api/students/{{studentEmail}}/habitos/{{habitId}}
+Accept: application/json
+
+###
+
+### 6) Crear habito (POST collection -> 201 + Location)
+POST {{baseUrl}}/api/students/{{studentEmail}}/habitos
+Content-Type: application/json
+
+{
+  "nombre": "Dormir mejor",
+  "meta": "8 horas diarias",
+  "icon": "😴",
+  "motivo": "Recuperacion fisica",
+  "dias": ["L", "M", "X", "J", "V"]
+}
+
+###
+
+### 7) Actualizar parcialmente (PATCH resource)
+PATCH {{baseUrl}}/api/students/{{studentEmail}}/habitos/{{habitId}}
+Content-Type: application/json
+
+{
+  "meta": "7.5 horas diarias",
+  "motivo": "Mejor energia en clases"
+}
+
+###
+
+### 8) Reemplazo completo (PUT resource)
+PUT {{baseUrl}}/api/students/{{studentEmail}}/habitos/{{habitId}}
+Content-Type: application/json
+
+{
+  "nombre": "Lectura profunda",
+  "meta": "45 min / dia",
+  "icon": "📘",
+  "motivo": "Aprender mas rapido",
+  "dias": ["L", "M", "X", "J", "V", "S"]
+}
+
+###
+
+### 9) Eliminar habito (DELETE resource -> 204)
+DELETE {{baseUrl}}/api/students/{{studentEmail}}/habitos/{{habitId}}
