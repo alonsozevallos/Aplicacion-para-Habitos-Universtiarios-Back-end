@@ -1,25 +1,28 @@
-import dotenv from 'dotenv'
 import app from './src/app.js'
-import { initDatabase } from './src/models/sequelize.js'
+import sequelize from './src/config/database.js'
 
-dotenv.config()
+const PORT = process.env.PORT || 3001
 
-const PORT = Number(process.env.PORT) || 3001
-
-const bootstrap = async () => {
+async function main() {
   try {
-    await initDatabase()
+    await sequelize.authenticate()
+    console.log('Conexión a la base de datos establecida correctamente.')
+
     app.listen(PORT, () => {
-      console.log(`API escuchando en http://localhost:${PORT}`)
+      console.log(`Servidor escuchando en http://localhost:${PORT}`)
     })
   } catch (error) {
-    console.error('No se pudo inicializar la base de datos PostgreSQL.')
+    console.error('No se pudo conectar a la base de datos.')
     console.error('Detalle:', error?.message || error)
-    if (error?.original?.message) {
-      console.error('Origen:', error.original.message)
-    }
+    console.error('Sugerencia: corre "npm run migrate" para crear las tablas.')
     process.exit(1)
   }
 }
 
-bootstrap()
+
+if (!process.env.VERCEL) {
+  main()
+}
+
+// Exportar para Vercel
+export default app
