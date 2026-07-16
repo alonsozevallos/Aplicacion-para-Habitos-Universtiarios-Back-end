@@ -1,4 +1,4 @@
-import { Student } from '../models/sequelize.js'
+import Student from '../models/student.js'
 
 const toPublicStudent = (student) => ({
   email: student.email,
