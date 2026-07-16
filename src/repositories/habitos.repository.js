@@ -1,5 +1,4 @@
-import Habit from '../models/habit.js'
-import Student from '../models/student.js'
+import { Habit, Student } from '../models/sequelize.js'
 
 const DEFAULT_HABITS = [
   { icon: '📚', nombre: 'Lectura diaria', meta: '30 min / día', dias: [], motivo: '', actividades: [] },
