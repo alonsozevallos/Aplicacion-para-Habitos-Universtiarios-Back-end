@@ -10,14 +10,6 @@ dotenv.config()
 
 const app = express()
 
-// Igual idea que el ensureDatabaseConnection() del ejemplo del profe:
-// en Vercel (serverless) no hay un "arranque" fijo como app.listen(), así
-// que se valida la conexión antes de atender peticiones, cacheando el
-// resultado para no repetirlo en cada invocación del mismo contenedor.
-// Se registra aquí (antes de las rutas) para que sí se ejecute: nuestro
-// app.js, a diferencia del ejemplo, tiene un handler 404 al final que
-// respondería primero si este middleware se agregara después (como en
-// index.js del profe).
 if (process.env.VERCEL) {
 	let dbConnected = false
 	app.use(async (_req, res, next) => {

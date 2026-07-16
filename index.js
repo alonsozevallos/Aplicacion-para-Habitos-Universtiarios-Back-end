@@ -19,9 +19,7 @@ async function main() {
   }
 }
 
-// Detectar si estamos en Vercel o en desarrollo local (igual que en el
-// ejemplo del profe): en Vercel no hace falta app.listen(), Vercel maneja
-// las peticiones directamente sobre la app exportada.
+
 if (!process.env.VERCEL) {
   main()
 }
