@@ -4,10 +4,28 @@ import dotenv from 'dotenv'
 import habitosRouter from './routes/habitos.route.js'
 import authRouter from './routes/auth.route.js'
 import studentsRouter from './routes/students.route.js'
+import sequelize from './config/database.js'
 
 dotenv.config()
 
 const app = express()
+
+if (process.env.VERCEL) {
+	let dbConnected = false
+	app.use(async (_req, res, next) => {
+		if (!dbConnected) {
+			try {
+				await sequelize.authenticate()
+				console.log('Conexion a la base de datos establecida correctamente')
+				dbConnected = true
+			} catch (error) {
+				console.error('Error conectando a la base de datos:', error)
+				return res.status(500).json({ error: 'No se pudo conectar a la base de datos.' })
+			}
+		}
+		next()
+	})
+}
 
 const allowedOrigins = (process.env.CORS_ORIGINS || '')
 	.split(',')
